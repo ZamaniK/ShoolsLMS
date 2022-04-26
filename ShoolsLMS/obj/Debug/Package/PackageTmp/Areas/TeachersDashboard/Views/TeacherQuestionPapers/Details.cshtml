@@ -1,0 +1,55 @@
+﻿@model ShoolsLMS.Models.Data.Paper
+
+@{
+    var fileSrc = ViewBag.FilePath;
+
+    ViewBag.Title = "Question Paper Details";
+}
+
+<div class="container">
+    <div class="top-bottom-padding">
+        <h2>@ViewBag.Title</h2>
+
+        <hr />
+    </div>
+</div>
+
+<div class="container">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+        <dt>
+            Download Question Paper
+        </dt>
+        <dd>
+            <a href="@Url.Action("Download", "TeacherQuestionPapers", new { FileName = fileSrc })" type="button" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Download</a>
+        </dd>
+    </dl>
+    <p>
+        <a href="@Url.Action("Edit", "TeacherQuestionPapers", new { ID = Model.PaperId })" type="button" class="data-btn btn btn-primary"><i class="fas fa-pen mr-1"></i> Edit</a>
+
+        <a href="@Url.Action("Index", "TeacherQuestionPapers")" type="button" class="data-btn btn btn-secondary"><i class="fas fa-list"></i> Back to List</a>
+    </p>
+</div>
+

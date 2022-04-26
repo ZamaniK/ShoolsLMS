@@ -1,0 +1,50 @@
+﻿@model ShoolsLMS.Models.Data.AnswerChoice
+
+@{
+    ViewBag.Title = "Question Details";
+}
+
+<div class="container">
+    <div class="top-bottom-padding">
+        <h2>@ViewBag.Title</h2>
+        <h4>@Model.Question.Quiz.QuizName</h4>
+        <hr />
+    </div>
+</div>
+
+<div class="container">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Question.QuestionText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Question.QuestionText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Choices)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Choices)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsCorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsCorrect)
+        </dd>
+
+    </dl>
+    <div class="row">
+        <p>
+            <a href="@Url.Action("Edit", "TeacherAnswerChoices", new { ID = Model.AnswerChoiceId })" type="button" class="data-btn btn btn-primary"><i class="fas fa-pen mr-1"></i> Edit</a>
+
+            <a href="@Url.Action("Index", "TeacherAnswerChoices")" type="button" class="data-btn btn btn-secondary"><i class="fas fa-list"></i> Back to List</a>
+
+        </p>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+﻿@model IEnumerable<ShoolsLMS.Models.Data.Subject>
+
+@{
+    ViewBag.Title = "All Subjects";
+}
+<aside id="colorlib-hero">
+
+    <div class="container">
+
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                max-width: 300px;
+                margin: auto;
+                color: grey;
+                background-color: lightblue;
+                text-align: center;
+                height: 560px !important;
+                margin-bottom: 40px !important;
+                border: groove !important;
+            }
+
+                .card:hover {
+                    border-radius: 10px;
+                    border-color: aqua !important;
+                }
+        </style>
+        @if (Model.Count() == 0)
+        {
+            <h2 class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box" style="text-align:center; padding-bottom:20px !important">No Subjects Available</h2>
+        }
+        else
+        {
+            <h2 class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box" style="text-align:center; padding-bottom:20px !important">All Available Subjects</h2>
+
+            <div class="container">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+
+                        <div class="col-md-4 animate-box">
+                            <div class="card">
+                                <img class="card-img-top" src="holder.js/100x180/" alt="">
+                                <h2><i class="fas fa-graduation-cap"></i></h2>
+                                <div class="card-body">
+                                    <h4 class="card-title"> Class Name: @Html.DisplayFor(x => item.Grade.GradeName)</h4>
+                                    <p class="card-text"> Subject Name : @Html.DisplayFor(x => item.SubjectName)</p>
+                                    <p class="card-text"> Subject Code : @Html.DisplayFor(x => item.SubjectCode)</p>
+                                    <p class="card-text"> Start Date : @Html.DisplayFor(x => item.StartDate)</p>
+                                    <p class="card-text"> Subject Educator :<br /> @Html.DisplayFor(x => item.User.Email)</p>
+
+                                    <div class="row">
+                                        <h5>Enrollment Form  </h5>
+
+                                        @using (Html.BeginForm("Enroll", "StudentDashboard", new { id = item.SubjectId }, FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="form-group-lg">
+                                                <p class="card-text">
+                                                    Subject Name : @Html.DisplayFor(x => item.SubjectName)
+                                                </p>
+                                                <p class="card-text">
+                                                    Enrollment Status :   @Html.DisplayFor(x => item.Enrollments.IsReadOnly)
+
+                                            </div>
+                                            <p><button type="submit" class="btn btn-primary"><i class="fas fa-send-o"></i> Enroll in Subject</button></p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+
+        }
+
+    </div>
+</aside>
+<div id="colorlib-services">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 animate-box text-center">
+                <div class="services">
+                    <span class="icon">
+                        <i class="fas fa-users mr-"></i>
+                    </span>
+                    <h3>Users</h3>
+                    <p>Teachers and Admin are authorized to see the list of registered user accounts and remove fake accounts.</p>
+                </div>
+            </div> 
+            <div class="col-md-4 animate-box text-center">
+                <div class="services">
+                    <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </span>
+                    <h3>Subjects</h3>
+                    <p>Subjects you Enroll in contain the contents of the particular School curriculumn,
+                    posted by the School Teacher.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 animate-box text-center">
+                <div class="services">
+                    <span class="icon">
+                        <i class="fas fa-at"></i>
+                    </span>
+                    <h3>School eMail</h3>
+                    <p>Email : Zamanikat100@gmail.com</p>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+</div>

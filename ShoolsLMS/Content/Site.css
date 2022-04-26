@@ -1,0 +1,206 @@
+﻿body {
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.7;
+    color: whitesmoke;
+    background: #fff;
+    margin: 0;
+}
+
+ h1 {
+    margin: 0px;
+}
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+/* 
+    NAVIGATION
+*/
+
+
+.navbar-nav {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.navbar-brand {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+}
+
+.navbar-toggle {
+    padding: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    
+    border-radius: 0
+}
+
+
+
+    .dropdown-menu > li > a {
+        padding: 5px 15px
+    }
+
+.open.dropdown-menu.mega {
+    display: block
+}
+
+.dropdown-menu.mega > .sub-menu {
+    display: table-cell;
+    border-left: 1px solid #e7e7e7;
+    list-style-type: none;
+    padding: 0;
+    min-width: 180px
+}
+
+    .dropdown-menu.mega > .sub-menu:first-child {
+        border-left: none;
+        padding-left: 0
+    }
+
+    .dropdown-menu.mega > .sub-menu > li > a {
+        display: block;
+        padding: 5px 15px;
+        text-decoration: none
+    }
+
+.dropdown-header {
+    padding: 5px 15px;
+    color: #777;
+    font-weight: bold;
+    border-bottom: 1px dashed #e7e7e7;
+    background: #f3f3f3;
+}
+
+.navbar-nav > li > a, .navbar-nav > .open > a, .navbar-nav > .active > a, .dropdown-menu > li > a, .dropdown-menu.mega > .sub-menu > li > a {
+    color: #f9f9f9 !important;
+    position: relative;
+}
+
+    .navbar-nav > li > a::before, .navbar-nav > .open > a::before, .navbar-nav > .active > a::before, .dropdown-menu > li > a::before, .dropdown-menu.mega > .sub-menu > li > a::before {
+        content: '';
+        position: absolute;
+        background: #3498dB !important;
+        -webkit-transition: all 300ms ease 0s;
+        -moz-transition: all 300ms ease 0s;
+        -o-transition: all 300ms ease 0s;
+        transition: all 300ms ease 0s;
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        -ms-transform: scale(0);
+        -o-transform: scale(0);
+        transform: scale(0)
+    }
+
+    .navbar-nav > li > a::before, .navbar-nav > .open > a::before, .navbar-nav > .active > a::before {
+        bottom: 0;
+        left: 0;
+        height: 2px;
+        width: 100%
+    }
+
+    .dropdown-menu > li > a::before, .dropdown-menu.mega > .sub-menu > li > a::before {
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 100%
+    }
+
+    .navbar-nav > li > a:hover::before, .navbar-nav > li > a:focus::before, .navbar-nav > .open > a::before, .navbar-nav > .open > a:hover::before, .navbar-nav > .open > a:focus::before, .navbar-nav > .active > a::before, .navbar-nav > .active > a:hover::before, .navbar-nav > .active > a:focus::before, .dropdown-menu > li > a:hover::before, .dropdown-menu > li > a:focus::before, .dropdown-menu > .active > a::before, .dropdown-menu > .active > a:hover::before, .dropdown-menu > .active > a:focus::before, .dropdown-menu.mega > .sub-menu > li > a:hover::before, .dropdown-menu.mega > .sub-menu > li > a:focus::before, .dropdown-menu.mega > .sub-menu > .active > a::before, .dropdown-menu.mega > .sub-menu > .active > a:hover::before, .dropdown-menu.mega > .sub-menu > .active > a:focus::before, .dropdown-menu.mega > .sub-menu > li > a:hover::before, .dropdown-menu.mega > .sub-menu > li > a:focus::before {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1)
+    }
+
+    .navbar-nav > li > a:hover, .navbar-nav > li > a:focus, .navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus, .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus, .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a, .dropdown-menu.mega > .sub-menu > li > a:hover, .dropdown-menu.mega > .sub-menu > .active > a, .dropdown-menu.mega > .sub-menu > li > a:focus {
+        background-color: #f9f9f9 !important;
+        color: #3498db !important;
+    }
+
+@media (min-width:768px) {
+    .navbar-nav > li > a {
+        padding-top: 20px;
+        padding-bottom: 20px
+    }
+
+    .dropdown .dropdown-menu {
+        -webkit-transform-origin: top;
+        -moz-transform-origin: top;
+        -ms-transform-origin: top;
+        -o-transform-origin: top;
+        transform-origin: top;
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        -o-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+        -webkit-transform: scale(1,0);
+        -moz-transform: scale(1,0);
+        -ms-transform: scale(1,0);
+        -o-transform: scale(1,0);
+        transform: scale(1,0);
+        -webkit-transition: all 200ms ease 0s;
+        -moz-transition: all 200ms ease 0s;
+        -o-transition: all 200ms ease 0s;
+        transition: all 200ms ease 0s;
+        display: block
+    }
+
+    .dropdown:hover .dropdown-menu, .dropdown.open .dropdown-menu {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -o-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-nav > li > a::before, .navbar-nav > .open > a::before, .navbar-nav > .active > a::before {
+        left: 0;
+        height: 100%;
+        width: 2px;
+        top: 0
+    }
+
+    .dropdown-menu.mega > .sub-menu {
+        display: block
+    }
+
+        .dropdown-menu.mega > .sub-menu > li > a {
+            padding-left: 25px
+        }
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
+
+
+
+/*/////////////////////////////////////////////////////////////
+*/

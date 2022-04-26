@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ShoolsLMS.Models.Data.Subject>
+
+@{
+    ViewBag.Title = "Lessons";
+
+}
+<div class="container">
+    <div class="row">
+        <div class="top-bottom-padding">
+            <h2><i class="fa fa-photo-video"></i> @ViewBag.Title</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-primary">
+
+            @foreach (var item in Model)
+            {
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @Html.DisplayFor(modelItem => item.SubjectName)
+                    </h3>
+                    <h4 style="padding-left:20px;"> <br />Educated by @item.User.Email</h4>
+
+                </div>
+
+                <table class="table table-bordered table-hover table-responsive">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Lesson Title")
+                        </th>
+                        <th>@Html.DisplayName("Video File")</th>
+
+                    </tr>
+
+                    @foreach (var assgn in item.Lessons)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.LessonName)
+                            </td>
+
+
+                            <td>
+                                <a href="@Url.Action("Details", "StudentDashboard", new { id = assgn.LessonId})" type="button" class="btn btn-primary"><i class="fas fa-video mr-1"></i> Lesson Video</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+                
+            }
+        </div>
+        
+    </div>
+</div>

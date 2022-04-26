@@ -1,0 +1,44 @@
+﻿@model ShoolsLMS.Areas.Dashboard.ViewModels.QuizListingModel
+
+@if (Model != null && Model.Quizs != null && Model.Quizs.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Subject</th>
+                <th scope="col">Quiz Name</th>
+                <th scope="col">Start Time</th>
+
+                <th scope="col">Score</th>
+
+
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var subject in Model.Quizs)
+            {
+                <tr>
+                    <td>
+                        @subject.Subject.SubjectName
+                    </td>
+                    <td>
+                        @subject.QuizName
+                    </td>
+                    <td>
+                        @subject.StartTime
+                    </td>
+
+                    <td>
+                        @subject.Score
+                    </td>
+                    <td>
+                        <button data-href="@Url.Action("Action", "TeacherQuizs", new { ID = subject.QuizId})" type="button" class="data-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i>Edit</button>
+                        <button data-href="@Url.Action("Delete", "TeacherQuizs", new { ID = subject.QuizId})" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="far fa-trash-alt mr-1"></i>Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,64 @@
+﻿@model ShoolsLMS.Models.Data.Lesson
+
+
+@{
+    var fileSrc = ViewBag.FilePath;
+
+    ViewBag.Title = "Lesson Video";    
+
+}
+
+<div class="container">
+    <div class="top-bottom-padding">
+        <h2><i class="fas fa-video mr-1"></i> @ViewBag.Title</h2>
+
+        <hr />
+    </div>
+</div>
+
+<div class="container">
+    <dl class="dl-horizontal">
+        <dt>
+            Subject
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+
+        <dt>
+            Educator Email
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject.User.Email)
+        </dd>
+
+        <dt>
+            Lesson
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LessonName)
+        </dd>
+        <dt>
+            Watch Lesson
+        </dt>
+        <dd>
+
+            <video id="videoclip" width="560" height="400" controls autoplay="autoplay">
+                <source id="mp4video" src=@Url.Content(@HttpUtility.UrlPathEncode(fileSrc)) type="video/mp4">
+            </video>
+        </dd>
+        <dd>
+            <a href="@Url.Action("VideoDownload", "StudentDashboard", new { FileName = fileSrc })" type="button" class="btn btn-sm btn-primary"><i class="fas fa-download fa-sm text-white-50"></i> Download</a>
+        </dd>
+
+    </dl>
+    <p>
+
+        <a href="@Url.Action("ViewLessons", "StudentDashboard", new {id = Model.SubjectId})" type="button" class="data-btn btn btn-secondary"><i class="fas fa-list"></i> Back to List</a>
+
+    </p>
+</div>
+

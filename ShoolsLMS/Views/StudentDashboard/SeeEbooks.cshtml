@@ -1,0 +1,63 @@
+﻿@model  IEnumerable<ShoolsLMS.Models.Data.Subject>
+
+@{
+    ViewBag.Title = "eBooks";
+}
+<div class="container">
+    <div class="row">
+        <div class="top-bottom-padding">
+            <h2><i class="fa fa-book-reader"></i> @ViewBag.Title</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-primary">
+
+            @foreach (var item in Model)
+            {
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @Html.DisplayFor(modelItem => item.SubjectName)
+                    </h3>
+                </div>
+
+                <table class="table table-bordered table-hover table-responsive">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Book Title")
+                        </th>
+                        <th>@Html.DisplayName("Book Author Name")</th>
+                        <th>@Html.DisplayName("Description")</th>
+                        <th>@Html.DisplayName("Published Date")</th>
+                        <th>@Html.DisplayName("File")</th>
+
+                    </tr>
+
+                    @foreach (var assgn in item.Books)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.AuthorName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.PublishedDate)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("DownloadBook", "StudentDashboard", new { fileName = assgn.FileName })" type="button" class="data-btn btn btn-primary"><i class="fa fa-download"></i> Download</a>
+                                ||
+                                <a href="@Url.Action("DisplayBook", "StudentDashboard", new { fileName = assgn.FileName })" type="button" class="data-btn btn btn-primary"><i class="fa fa-book-open"></i> View</a>
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+</div>

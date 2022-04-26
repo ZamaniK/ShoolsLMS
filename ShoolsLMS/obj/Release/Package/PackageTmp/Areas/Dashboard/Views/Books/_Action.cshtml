@@ -1,0 +1,151 @@
+﻿
+@model ShoolsLMS.Areas.Dashboard.ViewModels.BookActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (Model.ID > 0)
+                {
+                    <span>Edit Book</span>
+                }
+                else
+                {
+                    <span>Create Book</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select class="form-control" name="SubjectID">
+                        @if (Model.Subjects != null)
+                        {
+                            foreach (var grades in Model.Subjects)
+                            {
+                                <option value="@grades.SubjectId" @(grades.SubjectId == Model.SubjectId ? "selected" : string.Empty)>
+                                    @grades.SubjectName
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Book Title</label>
+                    <input class="form-control" name="Title" placeholder="Enter Book Title" value="@Model.Title">
+                </div>
+                <div class="form-group">
+                    <label>Author Name</label>
+                    <input class="form-control" name="AuthorName" placeholder="Enter Author Name" value="@Model.AuthorName">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input class="form-control" name="Description" placeholder="Enter Subject Description" value="@Model.Description">
+                </div>
+                <div class="form-group">
+                    <label>Publish Date</label>
+                    <input class="form-control" name="PublishDate" placeholder="Enter Release Date" value="@Model.DatePublished">
+                </div>
+
+                <div class="form-group">
+                    <label>Books</label>
+                    <input id="selectPictures" class="form-control" name="Picture" type="file" multiple />
+                    <input type="hidden" name="pictureIDs" id="pictureIDs" value="" />
+                </div>
+
+                <div id="picturesArea">
+                    @if (Model.BooksBookPDFs != null && Model.BooksBookPDFs.Count > 0)
+                    {
+                        foreach (var bookPDFs in Model.BooksBookPDFs)
+                        {
+                            <pdf src="/PDFs/site/@bookPDFs.BookPDF.URL" class="icon-file-pdf" style="width:200px" onclick="removeMe(this)" data-id="@bookPDFs.BookPDFID" />
+                        }
+                    }
+                </div>
+            </form>
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
+        </div>
+    </div>
+}
+<div id="documentTemplate">
+    <pdf src="" class="img-fluid" style="width:200px" onclick="removeMe(this)" />
+</div>
+
+<script>
+
+    $("#actionButton").click(function () {
+        var pictureIDs = [];
+        $("#picturesArea pdf").each(function () {
+            var picID = $(this).attr("data-id");
+
+            pictureIDs.push(picID);
+        });
+
+        $("#pictureIDs").val(pictureIDs.join());
+
+        $.ajax({
+            url: '@Url.Action("Action", "Books")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    //data is saved... reload listing
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message);
+                }
+            });
+    });
+
+
+
+
+    $("#selectPictures").change(function () {
+
+        var pictures = this.files;
+        var formData = new FormData();
+
+        for (var i = 0; i < pictures.length; i++) {
+            formData.append("Picture", pictures[i]);
+        }
+        $.ajax({
+            url: '@Url.Action("UploadPDFs", "Dashboard")',
+            type: "post",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+        .done(function (response) {
+
+            for (var i = 0; i < response.length; i++)
+            {
+                var picture = response[i];
+                var $pdfHTML = $("#documentTemplate").clone();
+                $pdfHTML.find("pdf").attr("src", "/PDFs/site/" + picture.URL);
+                $pdfHTML.find("pdf").attr("data-id", picture.ID);
+
+                $("#picturesArea").append($pdfHTML.html());
+            }
+            });
+    });
+
+    function removeMe(element) {
+        element.remove();
+    }
+</script>
+

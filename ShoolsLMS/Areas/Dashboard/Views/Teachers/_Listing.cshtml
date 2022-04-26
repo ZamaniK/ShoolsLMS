@@ -1,0 +1,46 @@
+﻿@model ShoolsLMS.Areas.Dashboard.ViewModels.TeacherListingModel
+
+@if (Model != null && Model.Teachers != null && Model.Teachers.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Teacher No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Subject</th>
+
+
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var subject in Model.Teachers)
+            {
+                <tr>
+                    <td>
+                        @subject.TeacherId
+                    </td>
+                    <td>
+                        @subject.TeacherName
+                    </td>
+                    <td>
+                        @subject.SubjectId
+                    </td>
+
+                    <td>
+                        <button data-href="@Url.Action("Action", "Teachers", new { ID = subject.TeacherId})" type="button" class="data-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i>Edit</button>
+                        <button data-href="@Url.Action("Delete", "Teachers", new { ID = subject.TeacherId})" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="far fa-trash-alt mr-1"></i>Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Sorry! There are no available records.
+    </div>
+}

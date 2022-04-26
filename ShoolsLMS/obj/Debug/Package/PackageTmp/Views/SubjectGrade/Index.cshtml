@@ -1,0 +1,60 @@
+﻿@model ShoolsLMS.ViewModels.SubjectsVM
+
+@if (Model.Grades != null && Model.Grades.Count() > 0)
+{
+    var i = 0;
+
+    <div id="colorlib-rooms" class="colorlib-nav-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+                    <h2>School Classes</h2>
+                    <p>Select Class</p>
+                    <p>
+                        @foreach (var grade in Model.Grades)
+                        {
+                            <button class="btn btn-sm changeAccomodationType" data-id="@grade.GradeId">
+                                @grade.GradeName
+                            </button>
+                        }
+                    </p>
+                </div>
+            </div>
+            <!-- Blog Post -->
+            @foreach (var Grade in Model.Grades)
+            {
+                <div data-id="@Grade.GradeId" class="row accomodationTypesRow" style="@(i !=0 ? "display:none" : string.Empty)">
+                    <div class="col-md-12 animate-box">
+                        <div class="owl-carousel owl-carousel2">
+
+                            @foreach (var subjects in Model.Subjects.Where(x => x.GradeId == Grade.GradeId))
+                            {
+                                var thumbnailPicture = subjects.SubjectPictures != null && subjects.SubjectPictures.Count > 0 ? subjects.SubjectPictures.First() : new ShoolsLMS.Models.Data.SubjectPictures();
+                                var thumbnailURL = thumbnailPicture.Picture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+                                <div class="item">
+                                    <a href="@Url.Action("Details","SubjectDashboard", new { area = "", id = subjects.SubjectId})" class="room" style="background-image: url(/images/site/@thumbnailURL);"></a>
+                                    <div class="desc text-center">
+                                        <h3>
+                                            <a href="@Url.Action("Details","SubjectDashboard", new { area = "", id = subjects.SubjectId})">
+                                                @subjects.SubjectName <br /> @subjects.Grade.GradeName
+                                            </a>
+                                        </h3>
+
+                                        <p><a href="@Url.Action("Details","SubjectDashboard", new { area = "", id = subjects.SubjectId})" class="btn btn-primary">View More &rarr;</a></p>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-center animate-box">
+                        <a href="#">View all classes <i class="icon-arrow-right3"></i></a>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+    i++;
+}
+<script src="~/Scripts/site.js"></script>

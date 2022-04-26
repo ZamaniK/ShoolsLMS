@@ -1,0 +1,54 @@
+﻿@model  IEnumerable<ShoolsLMS.Models.Data.Subject>
+@{
+    ViewBag.Title = "Assignments";
+}
+<div class="container">
+    <div class="row">
+        <div class="top-bottom-padding">
+            <h2><i class="fas fa-tasks"></i> @ViewBag.Title</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-primary">
+
+            @foreach (var item in Model)
+            {
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @Html.DisplayFor(modelItem => item.SubjectName)
+                    </h3>
+                </div>
+
+                <table class="table table-bordered table-hover table-responsive">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Assignment Name")
+                        </th>
+                        <th>@Html.DisplayName("Assignment Due Date")</th>
+                        <th>@Html.DisplayName("File")</th>
+                    </tr>
+
+                    @foreach (var assgn in item.Assignment)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.AssignmentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => assgn.LastDate)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("DownloadPDF", "StudentDashboard", new { fileName = assgn.FileName })" type="button" class="data-btn btn btn-primary"><i class="fa fa-download"></i> Download</a>
+                                ||
+                                <a href="@Url.Action("DisplayPDF", "StudentDashboard", new { fileName = assgn.FileName })" type="button" class="data-btn btn btn-primary"><i class="fa fa-book-open"></i> View</a>
+
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>
+</div>

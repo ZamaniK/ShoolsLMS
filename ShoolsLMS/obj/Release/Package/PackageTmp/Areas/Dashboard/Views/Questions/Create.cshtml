@@ -1,0 +1,47 @@
+﻿@model ShoolsLMS.Models.Data.Question
+
+@{
+    ViewBag.Title = "Add Question";
+}
+
+<div class="container">
+    <div class="top-bottom-padding">
+        <h2>@ViewBag.Title</h2>
+        <hr />
+    </div>
+</div>
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.QuizId, "Quiz", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("QuizId", null, "Select a Quiz", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.QuizId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.QuestionText, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.QuestionText, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.QuestionText, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Save</button>
+                    <a href="@Url.Action("Index", "Questions")" type="button" class="data-btn btn btn-secondary"><i class="fas fa-times mr-1"></i> Close</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

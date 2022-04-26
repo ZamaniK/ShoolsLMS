@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ShoolsLMS.Models.ViewModels.GradeViewModel>
+
+@{
+    ViewBag.Title = "List of Grades";
+}
+
+<div class="row">
+    <div class="top-bottom-padding">
+        <h2>
+            @ViewBag.Title
+            @Html.ActionLink("Add New Grades", "Create", null, new { @class = "btn btn-success btn-sm pull-right" })
+        </h2>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-bordered table-hover table-responsive">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GradeName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GradeName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GradeId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.GradeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GradeId })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

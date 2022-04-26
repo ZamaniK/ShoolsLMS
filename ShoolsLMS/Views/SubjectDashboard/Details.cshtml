@@ -1,0 +1,91 @@
+﻿@model ShoolsLMS.ViewModels.SubjectDetailsViewModel
+
+@if (Model != null && Model.Subjects != null)
+{
+    @*@{*@
+    var thumbnailPicture = Model.Subjects.SubjectPictures != null && Model.Subjects.SubjectPictures.Count > 0 ? Model.Subjects.SubjectPictures.First() : new ShoolsLMS.Models.Data.SubjectPictures();
+    var thumbnailURL = thumbnailPicture.Picture != null ? thumbnailPicture.Picture.URL : "default-image.jpg";
+    @*}*@
+
+
+    <aside id="colorlib-hero">
+        <div class="flexslider">
+            <ul class="slides">
+                <li style="background-image: url(/images/site/@thumbnailURL);">
+                    <div class="overlay"></div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12 col-md-offset-3 slider-text">
+                                <div class="slider-text-inner slider-text-inner2 text-center">
+                                    <h2>
+                                      Grade @Model.Subjects.Grade.GradeName
+                                    </h2>
+                                    <h1>
+                                        @Model.Subjects.SubjectName
+                                    </h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </aside>
+    <div id="colorlib-amenities">
+        <div class="container">
+            <div class="row">
+                <div class="amenities-flex">
+                    <div class="desc animate-box">
+
+                        <strong>
+                            @Model.Subjects.SubjectCode .
+                        </strong>
+                        <p>
+                            @Model.Subjects.Description
+                        </p>
+                        <p><a class="btn btn-primary btn-book" href="/StudentDashboard/ViewLessons/@Model.Subjects.SubjectId"><i class="fas fa-photo-video"></i> Lessons</a></p>
+                        <p><a class="btn btn-primary btn-book" href="/StudentDashboard/SeeQuiz/@Model.Subjects.SubjectId"><i class="fas fa-question"></i> Quizs</a></p>
+                        <p><a class="btn btn-primary btn-book" href="/StudentDashboard/SeeAssignment/@Model.Subjects.SubjectId"><i class="fas fa-tasks"></i> Assignments</a></p>
+                        <p><a class="btn btn-primary btn-book" href="/StudentDashboard/SeeEbooks/@Model.Subjects.SubjectId"><i class="fas fa-book-reader"></i> eBooks</a></p>
+                        <p><a class="btn btn-primary btn-book" href="/StudentDashboard/SeeQuestionPapers/@Model.Subjects.SubjectId"><i class="fas fa-file-pdf"></i> Question Papers</a></p>
+
+
+                        <div class="col-md-10 col-md-offset-1 animate-box">
+
+
+                        </div>
+                    </div>
+
+                    @if (Model.Subjects.SubjectPictures != null && Model.Subjects.SubjectPictures.Count > 0)
+                    {
+                        foreach (var accomodationPackagePicture in Model.Subjects.SubjectPictures)
+                        {
+                            var imagelURL = accomodationPackagePicture.Picture != null ? accomodationPackagePicture.Picture.URL : "default-image.jpg";
+                            <div class="amenities-img animate-box fadeInUp animated-fast" style="height:400px; background-image: url(/images/site/@thumbnailURL)">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+    $('#FromDate').datepicker({
+        format: 'mm/dd/yyyy',
+        startDate: '+1d'
+    });
+
+    $('#btnCheckAvailability').click(function () {
+        $.ajax({
+            url: '@Url.Action("CheckAvailability", "Accomodations")',
+            data: $("#frmConfirmBooking").serialize()
+        })
+            .done(function (response) {
+                $("#actionModal .modal-dialog").html(response);
+            });
+    });
+</script>
+

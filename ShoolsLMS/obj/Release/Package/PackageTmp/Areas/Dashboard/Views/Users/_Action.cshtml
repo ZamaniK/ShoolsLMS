@@ -1,0 +1,88 @@
+﻿@model ShoolsLMS.Areas.Dashboard.ViewModels.UsersActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (!string.IsNullOrEmpty(Model.ID))
+                {
+                    <span>Edit User</span>
+                }
+                else
+                {
+                    <span>Create User</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input class="form-control" name="Email" placeholder="Enter Email Address" value="@Model.Email">
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input class="form-control" name="Username" placeholder="Enter Username" value="@Model.Username">
+                </div>
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input class="form-control" name="FirstName" placeholder="Enter First Name" value="@Model.FirstName">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input class="form-control" name="LastName" placeholder="Enter Last Name" value="@Model.LastName">
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Gender, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.Label("Male")
+                        @Html.RadioButtonFor(m => m.Gender, "M")
+                        @Html.Label("Female")
+                        @Html.RadioButtonFor(m => m.Gender, "F")
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>HomeAddress</label>
+                    <input class="form-control" name="HomeAddress" placeholder="Enter Home Address" value="@Model.HomeAddress">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control" name="Password" placeholder="Enter Password" value="@Model.Password" required>
+                </div>
+            </form>
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
+        </div>
+    </div>
+}
+
+<script>
+    $("#actionButton").click(function () {
+        $.ajax({
+            url: '@Url.Action("Action", "Users")',
+            type: "post",
+            data: $("#actionForm").serialize()
+        })
+            .done(function (response) {
+                if (response.Success) {
+                    //data is saved... reload listing
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message);
+                }
+            });
+    });
+</script>

@@ -1,0 +1,110 @@
+﻿
+@model ShoolsLMS.Areas.Dashboard.ViewModels.PaperActionModel
+
+@if (Model != null)
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">
+                @if (Model.ID > 0)
+                {
+                    <span>Edit Question Papers</span>
+                }
+                else
+                {
+                    <span>Create Question Papers</span>
+                }
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="actionForm" enctype="multipart/form-data">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select class="form-control" name="SubjectID">
+                        @if (Model.Subjects != null)
+                        {
+                            foreach (var grades in Model.Subjects)
+                            {
+                                <option value="@grades.SubjectId" @(grades.SubjectId == Model.SubjectId ? "selected" : string.Empty)>
+                                    @grades.SubjectName
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input class="form-control" name="Title" placeholder="Enter Title" value="@Model.Title">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input class="form-control" name="Date" placeholder="Enter Date" value="@Model.Date">
+                </div>
+
+                <div class="form-group">
+                    <label>File</label>
+                    <input type="file" accept="application/pdf" id="fileToUpload" name="fileToUpload" class="form-control" placeholder="Enter Question Paper">
+                </div>
+
+
+            </form>
+
+            <div class="errorDiv">
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="actionButton" type="button" class="btn btn-primary"><i class="fas fa-save mr-1"></i>Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
+        </div>
+    </div>
+}
+
+
+<script>
+
+    $("#actionButton").click(function () {
+
+        if (window.FormData == undefined)
+            alert("Error : FormData is undefined");
+        else {
+            var fileUpload = $("#fileToUpload").get(0);
+            var files = fileUpload.files;
+            var fileData = new FormData();
+
+            fileData.append(files[0].name, files[0]);
+
+             $.ajax({
+                 type: "post",
+                url: '@Url.Action("Action", "Papers")',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                data: fileData,
+                
+            })
+
+        $.ajax({
+            url: '@Url.Action("Action", "Papers")',
+            type: "post",
+            dataType: 'json',
+            data: $("#actionForm").serialize()
+        })
+
+            .done(function (response) {
+                if (response.Success) {
+                    //data is saved... reload listing
+                    location.reload();
+                }
+                else {
+                    $(".errorDiv").html(response.Message);
+                }
+            });
+        }
+    });
+</script>
+

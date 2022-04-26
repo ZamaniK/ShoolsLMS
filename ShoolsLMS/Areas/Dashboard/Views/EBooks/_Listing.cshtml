@@ -1,0 +1,52 @@
+﻿@model ShoolsLMS.Areas.Dashboard.ViewModels.BookListingModel
+
+@if (Model != null && Model.Books != null && Model.Books.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Subject</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Author Name</th>
+                
+                <th scope="col">Date Released</th>
+
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var subject in Model.Books)
+            {
+                <tr>
+                    <td>
+                        @subject.Subject.SubjectName
+                    </td>
+                    <td>
+                        @subject.Name
+                    </td>
+                    <td>
+                        @subject.AuthorName
+                    </td>
+                    
+                    
+                    <td>
+                        @subject.PublishedDate
+                    </td>
+                     <td>
+                    <a href="@Url.Action("Edit", "EBooks", new { ID = subject.BookId })" type="button" class="data-btn btn btn-primary"><i class="fas fa-pen mr-1"></i>Edit</a>
+                    <a href="@Url.Action("Details", "EBooks", new { ID = subject.BookId })" type="button" class="data-btn btn btn-outline-info"><i class="far fa-file-alt mr-1"></i>Details</a>
+                    <a href="@Url.Action("Delete", "EBooks", new { ID = subject.BookId })" type="button" class="data-btn btn btn-danger"><i class="far fa-trash-alt mr-1"></i>Delete</a>
+                </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Sorry! There are no available records.
+    </div>
+}

@@ -1,0 +1,58 @@
+﻿@model ShoolsLMS.ViewModels.SubjectBookVM
+
+
+
+@if (Model.Subjects != null && Model.Subjects.Count() > 0)
+{
+    var i = 0;
+
+    <div id="colorlib-rooms" class="colorlib-light-grey">
+        <div class="container">
+            
+
+            @foreach (var Grade in Model.Subjects)
+            {
+                <div data-id="@Grade.SubjectId" class="row accomodationTypesRow" style="@(i !=0 ? "display:none" : string.Empty)">
+                    <div class="col-md-12 animate-box">
+                        <div class="owl-carousel owl-carousel2">
+
+                            @foreach (var subjects in Model.Books.Where(x => x.SubjectId == Grade.SubjectId))
+                            {
+                                var thumbnailPDF = subjects.BooksBookPDFs != null && subjects.BooksBookPDFs.Count > 0 ? subjects.BooksBookPDFs.First() : new ShoolsLMS.Models.Data.BooksBookPDF();
+                                var thumbnailURL = thumbnailPDF.BookPDF != null ? thumbnailPDF.BookPDF.URL : "application/pdf";
+
+
+                                <iframe src="@thumbnailURL" width="200" height="200" type='application/pdf'>
+                                    </iframe>
+
+                                        <div class="item">
+                                            <a href="@Url.Action("Details","SubjectDashboard", new { area = "", id = subjects.SubjectId})" class="room" style="background-image: url(/images/site/@thumbnailURL);"></a>
+                                            <div class="desc text-center">
+                                                <h3>
+                                                    <a href="@Url.Action("Details","SubjectDashboard", new { area = "", id = subjects.SubjectId})">
+                                                        @subjects.Name
+                                                    </a>
+                                                </h3>
+                                                <p class="price">
+                                                    @subjects.Description
+                                                </p>
+                                                <p class="price">
+                                                    @Html.ActionLink("File", "GetPDF", "SubjectBooks", new { fileName = subjects.FileName }, null)
+                                                </p>
+                                            </div>
+                                        </div>
+                                        }
+                            </div>
+                    </div>
+                    <div class="col-md-12 text-center animate-box">
+                        <a href="#">View all facilities <i class="icon-arrow-right3"></i></a>
+                    </div>
+                </div>
+
+            }
+
+        </div>
+    </div>
+    i++;
+}
+<script src="~/Scripts/site.js"></script>

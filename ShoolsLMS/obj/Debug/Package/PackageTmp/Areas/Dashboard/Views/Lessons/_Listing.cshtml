@@ -1,0 +1,84 @@
+﻿@model ShoolsLMS.Areas.Dashboard.ViewModels.LessonListingModel
+
+@if (Model != null && Model.Lessons != null && Model.Lessons.Count() > 0)
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Subject</th>
+                <th scope="col">Title</th>
+                <th scope="col">Educator</th>
+
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var subject in Model.Lessons)
+            {
+            <tr>
+                <td>
+                    @subject.Subject.SubjectName
+                </td>
+
+                <td>
+                    @subject.LessonName
+                </td>
+
+                <td>
+                    @subject.User.UserName
+                </td>
+
+
+
+                <td>
+                    <a href="@Url.Action("Edit", "Lessons", new { ID = subject.LessonId })" type="button" class="data-btn btn btn-primary"><i class="fas fa-pen mr-1"></i>Edit</a>
+                    <a href="@Url.Action("Details", "Lessons", new { ID = subject.LessonId })" type="button" class="data-btn btn btn-outline-info"><i class="far fa-file-alt mr-1"></i>Details</a>
+                    <a href="@Url.Action("Delete", "Lessons", new { ID = subject.LessonId })" type="button" class="data-btn btn btn-danger"><i class="far fa-trash-alt mr-1"></i>Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    if (Model.Pager.EndPage > 1)
+    {
+        <nav>
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index","Lessons")">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index","Lessons", new { page = Model.Pager.CurrentPage - 1, searchTerm = Model.SearchTerm})"><i class="fas fa-angle-left"></i></a>
+                    </li>
+                }
+
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="page-item @(page == Model.Pager.CurrentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index","Lessons", new { page = page, searchTerm = Model.SearchTerm})">@page</a>
+                    </li>
+                }
+
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index","Lessons", new { page = Model.Pager.CurrentPage + 1, searchTerm = Model.SearchTerm})"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("Index","Lessons", new { page = Model.Pager.TotalPages, searchTerm = Model.SearchTerm})"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        Sorry! There are no available records.
+    </div>
+}

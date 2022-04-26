@@ -1,0 +1,54 @@
+﻿@model ShoolsLMS.Models.Data.Assignment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container">
+    <div class="top-bottom-padding">
+        <h2>@ViewBag.Title</h2>
+        <h3 class="alert alert-danger" role="alert">Are you sure you want to delete this?</h3>
+        <hr />
+    </div>
+</div>
+
+
+<div class="container">
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject.SubjectName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject.SubjectName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssignmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssignmentName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastDate)
+        </dd>
+
+
+
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" value="Delete" class="data-btn btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+            |
+            <a href="@Url.Action("Index", "Assignments")" type="button" class="data-btn btn btn-primary"><i class="fas fa-list"></i> Back to List</a>
+
+        </div>
+    }
+</div>

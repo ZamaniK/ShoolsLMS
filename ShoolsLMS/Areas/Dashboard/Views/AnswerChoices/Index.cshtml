@@ -1,0 +1,65 @@
+﻿@model IEnumerable<ShoolsLMS.Models.Data.AnswerChoice>
+
+<div class="row">
+    <div class="col col-lg-12">
+        <h2>Answer Choices <i class="fas fa-question-circle"></i></h2>
+        <hr />
+    </div>
+</div>
+<div class="row  mb-3">
+    <div class="col col-lg-12">
+        <form>
+            <div class="input-group">
+                <input type="text" name="searchterm" class="form-control" placeholder="Search." value="" required>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit"><i class="fas fa-search mr-1"></i>Search</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Index", "AnswerChoices") "><i class="fas fa-redo mr-1"></i>Reset</a>
+                    <a href="@Url.Action("Create","AnswerChoices")" class="data-btn btn btn-outline-success" type="button"><i class="fas fa-plus mr-1"></i>Create</a>
+                </div>
+            </div>
+
+        </form>
+        <hr />
+    </div>
+</div>
+<div class="row">
+    <div class="col col-lg-12">
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Question.QuestionText)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Choices)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsCorrect)
+                </th>
+                <th>Action</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Question.QuestionText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Choices)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCorrect)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "AnswerChoices", new { ID = item.AnswerChoiceId })" type="button" class="data-btn btn btn-primary"><i class="fas fa-pen mr-1"></i>Edit</a>
+                        <a href="@Url.Action("Details", "AnswerChoices", new { ID = item.AnswerChoiceId })" type="button" class="data-btn btn btn-outline-info"><i class="far fa-file-alt mr-1"></i>Details</a>
+                        <a href="@Url.Action("Delete", "AnswerChoices", new { ID = item.AnswerChoiceId })" type="button" class="data-btn btn btn-danger"><i class="far fa-trash-alt mr-1"></i>Delete</a>
+
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

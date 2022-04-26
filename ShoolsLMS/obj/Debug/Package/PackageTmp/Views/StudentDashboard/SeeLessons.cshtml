@@ -1,0 +1,58 @@
+﻿@model ShoolsLMS.Models.ViewModels.SeeTeacherVM
+@{
+    ViewBag.Title = "Watch Lessons";
+    var firstFile = "";
+    if (Model.Teachers.Count > 0)
+    {
+        firstFile = Model.TeacherUserName + "/" + Model.SubjectCode + "/" + Model.Teachers.FirstOrDefault().FileName;
+    }
+
+}
+<div class="container">
+    <div class="row top-bottom-padding">
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <div id="watch_lecture">
+                    @{
+                        Html.RenderPartial("_VideoPartial", firstFile);
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">@Model.SubjectName <i class="fas fa-photo-video"></i></h3>
+                    </div>
+                    <h4 style="padding-left:20px;"> <br /> by @Model.TeacherUserName</h4>
+                    <div id="solTitle" class="list-group">
+                        @foreach (var item in Model.Teachers)
+                        {
+                            var urlpath = Model.TeacherUserName + "/" + Model.SubjectCode + "/" + item.FileName;
+                            <a href="#" class="list-group-item" onclick="watchLectureUrl('@item.LessonName', '@urlpath');">
+                                @item.LessonName
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(document).ready(function(e) {
+            e.preventDefault();
+        });
+
+        function watchLectureUrl(file, path) {
+            console.log(path);
+            $("#watch_lecture").load('@(Url.Action("WatchLesson", "StudentDashboard", null, Request.Url.Scheme))?path=' + path);
+        }
+    </script>
+}
